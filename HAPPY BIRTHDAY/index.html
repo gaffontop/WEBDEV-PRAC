@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <!-- ✅ Optimized for mobile (prevents zoom and keeps layout responsive) -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+  <title>Happy Birthday Joanna Nicole   🎉</title>
+
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(135deg, #ffe1e1, #ff69b4);
+      color: white;
+      text-align: center;
+      overflow-x: hidden;
+      overflow-y: auto;
+    }
+
+    header {
+      padding: 60px 20px 30px;
+      animation: floatIn 2s ease-out;
+    }
+
+    header h1 {
+      font-size: 2.5em;
+      margin: 0;
+      text-shadow: 3px 3px 8px rgba(0,0,0,0.3);
+      animation: bounce 2s infinite;
+      word-wrap: break-word;
+    }
+
+    header p {
+      font-size: 1.2em;
+      margin-top: 10px;
+      font-style: italic;
+      animation: fadeIn 3s ease-in-out;
+    }
+
+    section {
+      padding: 30px 20px;
+      font-size: 1.1em;
+      animation: slideUp 2.5s ease-in-out;
+    }
+
+    .message {
+      background: rgba(255,255,255,0.15);
+      border-radius: 15px;
+      padding: 20px;
+      max-width: 700px;
+      margin: auto;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+      animation: pulse 3s infinite;
+    }
+
+    footer {
+      margin: 40px 0 20px;
+    }
+
+    /* Animations */
+    @keyframes bounce {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-10px); }
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+    @keyframes floatIn {
+      from { transform: translateY(-50px); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
+    }
+    @keyframes slideUp {
+      from { transform: translateY(50px); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
+    }
+    @keyframes pulse {
+      0%, 100% { box-shadow: 0 0 15px rgba(255,255,255,0.4); }
+      50% { box-shadow: 0 0 25px rgba(255,255,255,0.7); }
+    }
+
+    /* Balloons */
+    .balloon {
+      position: absolute;
+      bottom: -150px;
+      width: 60px;
+      height: 80px;
+      border-radius: 50% 50% 45% 45%;
+      opacity: 0.8;
+      animation: floatUp 8s linear forwards;
+    }
+    .balloon::after {
+      content: "";
+      position: absolute;
+      width: 1px;
+      height: 40px;
+      background: #fff;
+      left: 50%;
+      bottom: -40px;
+      transform: translateX(-50%);
+    }
+
+    @keyframes floatUp {
+      from { transform: translateY(0) rotate(0); opacity: 1; }
+      to { transform: translateY(-110vh) rotate(360deg); opacity: 0; }
+    }
+
+    canvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      z-index: -1;
+      pointer-events: none;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>🎂 Happy Birthday Joanna Nicole 🎉</h1>
+    <p>To my dearest friendd 😜 💙</p>
+  </header>
+
+  <section>
+    <div class="message">
+      <p>Hello Joanna,</p>
+      <p>You bring so much joy, laughter, and light into our friendship😜.  
+      I feel blessed every day to have a friendship like you.  
+      May this year be full of happiness, fun, and all your dreams coming true!  
+      Keep smiling and always stay the amazing person you are.
+      looking forward to excel our friendship into hahahah iykyk 💫</p>
+      <p>With lots of love,  
+      <br> From a frienddd 😜💖</p>
+    </div>
+  </section>
+
+  <footer>
+    <p>🎈 Enjoy your special day! 🎈</p>
+  </footer>
+
+  <canvas id="confettiCanvas"></canvas>
+
+  <script>
+    // 🎉 Confetti
+    const canvas = document.getElementById("confettiCanvas");
+    const ctx = canvas.getContext("2d");
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+
+    const confettiPieces = [];
+    const colors = ["#ffb7b7","#ffffff","#ffd2d2","#ffc3c3","#ffb7b7","#ff9d9d"];
+
+    class Confetti {
+      constructor() {
+        this.x = Math.random() * canvas.width;
+        this.y = Math.random() * canvas.height - canvas.height;
+        this.size = Math.random() * 8 + 4;
+        this.color = colors[Math.floor(Math.random() * colors.length)];
+        this.speed = Math.random() * 3 + 2;
+        this.rotation = Math.random() * 360;
+      }
+      update() {
+        this.y += this.speed;
+        this.rotation += this.speed;
+        if (this.y > canvas.height) {
+          this.y = -10;
+          this.x = Math.random() * canvas.width;
+        }
+      }
+      draw() {
+        ctx.save();
+        ctx.translate(this.x, this.y);
+        ctx.rotate(this.rotation * Math.PI / 180);
+        ctx.fillStyle = this.color;
+        ctx.fillRect(0, 0, this.size, this.size);
+        ctx.restore();
+      }
+    }
+
+    function initConfetti() {
+      for (let i = 0; i < 200; i++) {
+        confettiPieces.push(new Confetti());
+      }
+    }
+
+    function animateConfetti() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      confettiPieces.forEach(p => { p.update(); p.draw(); });
+      requestAnimationFrame(animateConfetti);
+    }
+
+    initConfetti();
+    animateConfetti();
+
+    window.addEventListener("resize", () => {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    });
+
+    // 🎈 Balloons
+    function createBalloon() {
+      const balloon = document.createElement("div");
+      balloon.classList.add("balloon");
+      balloon.style.left = Math.random() * 100 + "vw";
+      balloon.style.background = `hsl(${Math.random()*360},70%,60%)`;
+      balloon.style.animationDuration = (6 + Math.random() * 4) + "s";
+      document.body.appendChild(balloon);
+      setTimeout(() => balloon.remove(), 10000);
+    }
+
+    setInterval(createBalloon, 2000);
+  </script>
+</body>
+</html>
